@@ -33,7 +33,7 @@
     INNER JOIN presentacion p
     ON md.idPresentacion = p.idPresentacion 
     WHERE cm.idMedicamento = '$idMedicamento'
-    AND cm.idUsuario = '$user_id'
+
     ";
     
     $cantidadMedicamentos = mysqli_query($conn, $consultaMedicamentos);
