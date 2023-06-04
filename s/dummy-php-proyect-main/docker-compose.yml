@@ -1,0 +1,38 @@
+services:
+  php:
+    build:
+      dockerfile: ./Dockerfile
+      context: ./www
+    ports:
+      - 80:80
+    volumes:
+      - ./www:/var/www/html
+      - ./config/etc:/php_conf
+      - type: bind
+        source: ./config/php/php.ini
+        target: /usr/local/etc/php/php.ini
+    env_file:
+      - ./.env
+  mysql:
+    image: mysql:5.7.39
+    ports:
+      - 3306:3306
+    environment: 
+        MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - type: bind
+        source: ./clinicascomunitarias.sql
+        target: /docker-entrypoint-initdb.d/clinicascomunitarias.sql
+  alert_service:
+    tty: true
+    build:
+      dockerfile: ./Dockerfile
+      context: alert_service
+    volumes:
+      - type: bind
+        source: ./alert_service/extract.sh
+        target: /dir/extract.sh
+    env_file:
+      - ./.env
+    entrypoint:
+      - /dir/extract.sh
