@@ -36,7 +36,7 @@
         ON md.idDosis = d.idDosis
       INNER JOIN presentacion p
         ON md.idPresentacion = p.idPresentacion
-  WHERE cm.idUsuario = '$user_id'
+  WHERE 1=1
   ORDER BY cm.fechadecaducidadMedicamento DESC
   ;
     ";
